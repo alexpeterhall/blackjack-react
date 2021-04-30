@@ -1,199 +1,37 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Container, Row, Col, Button } from 'react-bootstrap';
+import { Navbar, Container } from 'react-bootstrap';
+import { cardValues, newDeck, aces } from './components/Cards/deck';
 import Cards from './components/Cards/Cards';
-import Results from './components/Results/Results';
-import Bank from './components/Bank';
+import Bank from './components/Bank/Bank';
+import Controls from './components/Controls/Controls';
+import ResultsMessage from './components/Results/ResultsMessage/ResultsMessage';
+import Scores from './components/Results/Scores/Scores';
 
-const cardValues = {
-  cardBack: 0,
-  aceClubs: 11,
-  twoClubs: 2,
-  threeClubs: 3,
-  fourClubs: 4,
-  fiveClubs: 5,
-  sixClubs: 6,
-  sevenClubs: 7,
-  eightClubs: 8,
-  nineClubs: 9,
-  tenClubs: 10,
-  jackClubs: 10,
-  queenClubs: 10,
-  kingClubs: 10,
-  aceSpades: 11,
-  twoSpades: 2,
-  threeSpades: 3,
-  fourSpades: 4,
-  fiveSpades: 5,
-  sixSpades: 6,
-  sevenSpades: 7,
-  eightSpades: 8,
-  nineSpades: 9,
-  tenSpades: 10,
-  jackSpades: 10,
-  queenSpades: 10,
-  kingSpades: 10,
-  aceHearts: 11,
-  twoHearts: 2,
-  threeHearts: 3,
-  fourHearts: 4,
-  fiveHearts: 5,
-  sixHearts: 6,
-  sevenHearts: 7,
-  eightHearts: 8,
-  nineHearts: 9,
-  tenHearts: 10,
-  jackHearts: 10,
-  queenHearts: 10,
-  kingHearts: 10,
-  aceDiamonds: 11,
-  twoDiamonds: 2,
-  threeDiamonds: 3,
-  fourDiamonds: 4,
-  fiveDiamonds: 5,
-  sixDiamonds: 6,
-  sevenDiamonds: 7,
-  eightDiamonds: 8,
-  nineDiamonds: 9,
-  tenDiamonds: 10,
-  jackDiamonds: 10,
-  queenDiamonds: 10,
-  kingDiamonds: 10,
+const initialState = {
+  playerScore: 0,
+  dealerScore: 0,
+  playerHand: ['cardBack', 'cardBack'],
+  dealerHand: [],
+  dealerHandHidden: ['cardBack', 'cardBack'],
+  dealerHidden: true,
+  currentDeck: [...newDeck],
+  handDealt: false,
+  playerStand: false,
+  playerBusted: false,
+  dealerBusted: false,
+  result: '',
 };
-
-const newDeck = [
-  'aceClubs',
-  'twoClubs',
-  'threeClubs',
-  'fourClubs',
-  'fiveClubs',
-  'sixClubs',
-  'sevenClubs',
-  'eightClubs',
-  'nineClubs',
-  'tenClubs',
-  'jackClubs',
-  'queenClubs',
-  'kingClubs',
-  'aceSpades',
-  'twoSpades',
-  'threeSpades',
-  'fourSpades',
-  'fiveSpades',
-  'sixSpades',
-  'sevenSpades',
-  'eightSpades',
-  'nineSpades',
-  'tenSpades',
-  'jackSpades',
-  'queenSpades',
-  'kingSpades',
-  'aceHearts',
-  'twoHearts',
-  'threeHearts',
-  'fourHearts',
-  'fiveHearts',
-  'sixHearts',
-  'sevenHearts',
-  'eightHearts',
-  'nineHearts',
-  'tenHearts',
-  'jackHearts',
-  'queenHearts',
-  'kingHearts',
-  'aceDiamonds',
-  'twoDiamonds',
-  'threeDiamonds',
-  'fourDiamonds',
-  'fiveDiamonds',
-  'sixDiamonds',
-  'sevenDiamonds',
-  'eightDiamonds',
-  'nineDiamonds',
-  'tenDiamonds',
-  'jackDiamonds',
-  'queenDiamonds',
-  'kingDiamonds',
-  'aceClubs',
-  'twoClubs',
-  'threeClubs',
-  'fourClubs',
-  'fiveClubs',
-  'sixClubs',
-  'sevenClubs',
-  'eightClubs',
-  'nineClubs',
-  'tenClubs',
-  'jackClubs',
-  'queenClubs',
-  'kingClubs',
-  'aceSpades',
-  'twoSpades',
-  'threeSpades',
-  'fourSpades',
-  'fiveSpades',
-  'sixSpades',
-  'sevenSpades',
-  'eightSpades',
-  'nineSpades',
-  'tenSpades',
-  'jackSpades',
-  'queenSpades',
-  'kingSpades',
-  'aceHearts',
-  'twoHearts',
-  'threeHearts',
-  'fourHearts',
-  'fiveHearts',
-  'sixHearts',
-  'sevenHearts',
-  'eightHearts',
-  'nineHearts',
-  'tenHearts',
-  'jackHearts',
-  'queenHearts',
-  'kingHearts',
-  'aceDiamonds',
-  'twoDiamonds',
-  'threeDiamonds',
-  'fourDiamonds',
-  'fiveDiamonds',
-  'sixDiamonds',
-  'sevenDiamonds',
-  'eightDiamonds',
-  'nineDiamonds',
-  'tenDiamonds',
-  'jackDiamonds',
-  'queenDiamonds',
-  'kingDiamonds',
-];
-
-const aces = ['aceClubs', 'aceSpades', 'aceHearts', 'aceDiamonds'];
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      playerScore: 0,
-      dealerScore: 0,
-      playerHand: ['cardBack', 'cardBack'],
-      dealerHand: [],
-      dealerHandHidden: ['cardBack', 'cardBack'],
-      dealerHidden: true,
-      currentDeck: [...newDeck],
-      handDealt: false,
-      playerStand: false,
-      playerBusted: false,
-      dealerBusted: false,
-      result: '',
-    };
+    this.state = initialState;
   }
 
-  generateRandomCard = () => {
+  getRandomCard = () => {
     const currentDeckCopy = [...this.state.currentDeck];
-    const randomNumber = Math.floor(
-      Math.random() * (currentDeckCopy.length - 1)
-    );
+    const randomNumber = Math.floor(Math.random() * (currentDeckCopy.length - 1));
     const cardName = currentDeckCopy[randomNumber];
     currentDeckCopy.splice(randomNumber, 1);
     this.setState({ currentDeck: currentDeckCopy });
@@ -204,8 +42,8 @@ class App extends React.Component {
     if (this.state.handDealt === true) {
       return null;
     }
-    const playerHand = [this.generateRandomCard(), this.generateRandomCard()];
-    const dealerHand = [this.generateRandomCard(), this.generateRandomCard()];
+    const playerHand = [this.getRandomCard(), this.getRandomCard()];
+    const dealerHand = [this.getRandomCard(), this.getRandomCard()];
     this.setState(
       {
         handDealt: true,
@@ -224,7 +62,7 @@ class App extends React.Component {
     // Create a copy of the player's hand array from state
     const newHand = [...this.state.playerHand];
     // Push a new random card from the deck onto the player's hand
-    newHand.push(this.generateRandomCard());
+    newHand.push(this.getRandomCard());
     // Write the player's new hand to state and then calculate their new score
     this.setState({ playerHand: newHand }, () => this.calculatePlayerScore());
   };
@@ -300,7 +138,7 @@ class App extends React.Component {
     });
     // Need to check each new card (hit) at a time to avoid looping within the while loop. As per blackjack rules, the dealer must hit if their score is below 17 and must stand once they reach at least 17.
     while (newDealerScore < 17) {
-      const newCard = this.generateRandomCard();
+      const newCard = this.getRandomCard();
       newHand.push(newCard);
       newDealerScore += cardValues[newCard];
       if (aces.includes(newCard)) {
@@ -311,9 +149,7 @@ class App extends React.Component {
         dealerAcesCount--;
       }
     }
-    this.setState({ dealerHand: newHand, dealerScore: newDealerScore }, () =>
-      this.handOver()
-    );
+    this.setState({ dealerHand: newHand, dealerScore: newDealerScore }, () => this.handOver());
   };
 
   handOver = () => {
@@ -335,20 +171,7 @@ class App extends React.Component {
 
   // TODO Add logic to maintain the state of the deck instead of completely resetting it every hand.
   resetHand = () => {
-    this.setState({
-      playerScore: 0,
-      dealerScore: 0,
-      playerHand: ['cardBack', 'cardBack'],
-      dealerHand: [],
-      dealerHandHidden: ['cardBack', 'cardBack'],
-      dealerHidden: true,
-      currentDeck: [...newDeck],
-      handDealt: false,
-      playerStand: false,
-      playerBusted: false,
-      dealerBusted: false,
-      result: '',
-    });
+    this.setState(initialState);
   };
 
   render() {
@@ -358,74 +181,31 @@ class App extends React.Component {
           <Navbar.Brand href='#home'>Let's Play Blackjack!</Navbar.Brand>
         </Navbar>
         <Container style={{ textAlign: 'center' }}>
-          <Results
+          <ResultsMessage
             result={this.state.result}
             playerBusted={this.state.playerBusted}
             dealerBusted={this.state.dealerBusted}
           />
-          <Row lg={8} style={{ padding: '0 0 20px 0' }}>
-            <Col>
-              <Cards
-                hand={
-                  this.state.dealerHidden
-                    ? this.state.dealerHandHidden
-                    : this.state.dealerHand
-                }
-              />
-            </Col>
-            <Col>
-              <Cards hand={this.state.playerHand} />
-            </Col>
-          </Row>
-          <Row lg={8}>
-            <Col>
-              <h3>
-                Score: {this.state.dealerHidden ? '?' : this.state.dealerScore}
-              </h3>
-            </Col>
-            <Col>
-              <h3>Score: {this.state.playerScore}</h3>
-            </Col>
-          </Row>
-          <Row lg={8}>
-            <Col>
-              <Bank />
-            </Col>
-            <Col>
-              <Bank />
-            </Col>
-          </Row>
-          <Row style={{ padding: '30px 0 0 0' }}>
-            <Col lg={{ span: 6, offset: 3 }}>
-              <Button variant='outline-success' disabled>
-                Place Bet
-              </Button>{' '}
-              <Button
-                variant='outline-primary'
-                onClick={() => this.dealHand()}
-                disabled={this.state.handDealt}>
-                Deal Hand
-              </Button>{' '}
-              <Button
-                variant='outline-success'
-                onClick={() => this.playDealerHand()}
-                disabled={!this.state.handDealt || this.state.playerStand}>
-                Stand
-              </Button>{' '}
-              <Button
-                variant='outline-warning'
-                onClick={() => this.hit()}
-                disabled={!this.state.handDealt || this.state.playerStand}>
-                Hit
-              </Button>{' '}
-              <Button
-                variant='outline-danger'
-                onClick={() => this.resetHand()}
-                disabled={!this.state.handDealt}>
-                Clear Hand
-              </Button>{' '}
-            </Col>
-          </Row>
+          <Cards
+            dealerHand={
+              this.state.dealerHidden ? this.state.dealerHandHidden : this.state.dealerHand
+            }
+            playerHand={this.state.playerHand}
+          />
+          <Scores
+            dealerHidden={this.state.dealerHidden}
+            dealerScore={this.state.dealerScore}
+            playerScore={this.state.playerScore}
+          />
+          <Bank />
+          <Controls
+            handDealt={this.state.handDealt}
+            playerStand={this.state.playerStand}
+            deal={this.dealHand}
+            hit={this.hit}
+            reset={this.resetHand}
+            playDealer={this.playDealerHand}
+          />
         </Container>
       </div>
     );

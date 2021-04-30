@@ -1,9 +1,8 @@
 import React from 'react';
-import './Results.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './ResultsMessage.css';
 import { Row, Col } from 'react-bootstrap';
 
-const results = (props) => {
+const Message = (props) => {
   let playerResult = null;
   let dealerResult = null;
   let playerStyle = null;
@@ -47,4 +46,4 @@ const results = (props) => {
   );
 };
 
-export default results;
+export default Message;

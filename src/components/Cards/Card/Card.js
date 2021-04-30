@@ -1,8 +1,8 @@
 import React from 'react';
-import '../cards.css';
+import '../Cards.css';
 
-const card = (props) => {
+const Card = (props) => {
   return <i className={props.card} />;
 };
 
-export default card;
+export default Card;
