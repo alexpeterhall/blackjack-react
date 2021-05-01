@@ -5,10 +5,10 @@ const Scores = (props) => {
   return (
     <Row lg={8}>
       <Col>
-        <h3>Score: {props.dealerHidden ? '?' : props.dealerScore}</h3>
+        <h2>Dealer Hand: {props.dealerHidden ? '🤷' : props.dealerScore}</h2>
       </Col>
       <Col>
-        <h3>Score: {props.playerScore}</h3>
+        <h2>Player Hand: {props.playerScore}</h2>
       </Col>
     </Row>
   );

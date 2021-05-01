@@ -7,10 +7,15 @@ import Bank from './components/Bank/Bank';
 import Controls from './components/Controls/Controls';
 import ResultsMessage from './components/Results/ResultsMessage/ResultsMessage';
 import Scores from './components/Results/Scores/Scores';
+import GameOverModal from './components/Results/GameOver/GameOverModal';
 
 const initialState = {
   playerScore: 0,
   dealerScore: 0,
+  playerBank: 500,
+  currentPot: 0,
+  betInput: '',
+  betInputIsValid: false,
   playerHand: ['cardBack', 'cardBack'],
   dealerHand: [],
   dealerHandHidden: ['cardBack', 'cardBack'],
@@ -21,6 +26,7 @@ const initialState = {
   playerBusted: false,
   dealerBusted: false,
   result: '',
+  gameOver: false,
 };
 
 class App extends React.Component {
@@ -28,6 +34,28 @@ class App extends React.Component {
     super(props);
     this.state = initialState;
   }
+
+  validateInput = (text) => {
+    const regex = new RegExp('^\\d+$');
+    return regex.test(text) && parseInt(text) <= this.state.playerBank && parseInt(text) > 0;
+  };
+
+  betInputHandler = (event) => {
+    if (this.validateInput(event.target.value)) {
+      this.setState({ betInput: event.target.value, betInputIsValid: true });
+    } else {
+      this.setState({ betInput: event.target.value, betInputIsValid: false });
+    }
+  };
+
+  submitBetHandler = () => {
+    this.setState((previousState) => {
+      return {
+        currentPot: parseInt(previousState.betInput) * 2,
+        playerBank: (previousState.playerBank -= parseInt(previousState.betInput)),
+      };
+    });
+  };
 
   getRandomCard = () => {
     const currentDeckCopy = [...this.state.currentDeck];
@@ -154,33 +182,76 @@ class App extends React.Component {
 
   handOver = () => {
     if (this.state.playerScore === this.state.dealerScore) {
-      this.setState({ result: 'tied' });
+      this.setState((previousState) => {
+        return {
+          result: 'tied',
+          playerBank: (previousState.playerBank += previousState.currentPot / 2),
+        };
+      });
     } else if (this.state.playerScore > 21) {
       this.setState({ result: 'dealer', playerBusted: true });
     } else if (this.state.dealerScore > 21) {
-      this.setState({ result: 'player', dealerBusted: true });
+      this.setState((previousState) => {
+        return {
+          result: 'player',
+          dealerBusted: true,
+          playerBank: (previousState.playerBank += previousState.currentPot),
+        };
+      });
     } else if (this.state.playerScore > this.state.dealerScore) {
-      this.setState({ result: 'player' });
+      this.setState((previousState) => {
+        return {
+          result: 'player',
+          playerBank: (previousState.playerBank += previousState.currentPot),
+        };
+      });
     } else if (this.state.playerScore < this.state.dealerScore) {
       this.setState({ result: 'dealer' });
     } else {
       console.log('Something went wrong');
     }
-    this.setState({ dealerHidden: false, playerStand: true });
+    this.setState({ dealerHidden: false, playerStand: true, currentPot: 0 });
   };
 
   // TODO Add logic to maintain the state of the deck instead of completely resetting it every hand.
   resetHand = () => {
-    this.setState(initialState);
+    let gameOver = false;
+    if (this.state.playerBank === 0) {
+      gameOver = true;
+    }
+    this.setState((previousState) => {
+      return {
+        playerScore: 0,
+        dealerScore: 0,
+        currentPot: 0,
+        betInputIsValid: this.validateInput(previousState.betInput),
+        playerHand: ['cardBack', 'cardBack'],
+        dealerHand: [],
+        dealerHandHidden: ['cardBack', 'cardBack'],
+        dealerHidden: true,
+        currentDeck: [...newDeck],
+        handDealt: false,
+        playerStand: false,
+        playerBusted: false,
+        dealerBusted: false,
+        result: '',
+        gameOver: gameOver,
+      };
+    });
   };
 
   render() {
     return (
       <div className='App'>
         <Navbar bg='dark' variant='dark' className='justify-content-center'>
-          <Navbar.Brand href='#home'>Let's Play Blackjack!</Navbar.Brand>
+          <Navbar.Brand href='/'>
+            <h2>Let's Play Blackjack!</h2>
+          </Navbar.Brand>
         </Navbar>
         <Container style={{ textAlign: 'center' }}>
+          {this.state.gameOver ? (
+            <GameOverModal show={this.state.gameOver} onHide={() => this.setState(initialState)} />
+          ) : null}
           <ResultsMessage
             result={this.state.result}
             playerBusted={this.state.playerBusted}
@@ -197,10 +268,20 @@ class App extends React.Component {
             dealerScore={this.state.dealerScore}
             playerScore={this.state.playerScore}
           />
-          <Bank />
+          <Bank
+            playerBank={this.state.playerBank}
+            currentPot={this.state.currentPot}
+            betInput={this.state.betInput}
+            isValid={this.state.betInputIsValid}
+            handDealt={this.state.handDealt}
+            inputChangedHandler={this.betInputHandler}
+            submitBet={this.submitBetHandler}
+          />
           <Controls
             handDealt={this.state.handDealt}
+            currentPot={this.state.currentPot}
             playerStand={this.state.playerStand}
+            dealerHidden={this.state.dealerHidden}
             deal={this.dealHand}
             hit={this.hit}
             reset={this.resetHand}

@@ -1,6 +1,6 @@
 # Let's Play Blackjack
 
-This is a re-write of my 2015 cult classic ["Let's Play Blackjack!"](https://github.com/Aroxx/blackjack-game) using React instead of jQuery.
+This is a re-write of my 2015 cult classic ["Let's Play Blackjack!"](https://github.com/Aroxx/blackjack-game) using React instead of jQuery. I maintained the same bare-bones UI and just replicated the functionality with some improvements.
 
 I'm using [React Bootstrap](https://react-bootstrap.github.io/) for my buttons and layout. This is my first time using it and I like how easy it is to install and add Bootstrap styled components.
 

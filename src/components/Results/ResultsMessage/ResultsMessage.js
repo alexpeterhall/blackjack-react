@@ -18,8 +18,8 @@ const Message = (props) => {
     playerStyle = 'Winner';
     dealerStyle = 'Loser';
   } else if (props.result === 'tied') {
-    playerResult = "It's a Tie!";
-    dealerResult = "It's a Tie!";
+    playerResult = "It's a Draw!";
+    dealerResult = "It's a Draw!";
     playerStyle = 'Tied';
     dealerStyle = 'Tied';
   } else if (props.result === 'player') {
