@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/blackjack-react/static/css/main.4b871a72.chunk.css",
-    "main.js": "/blackjack-react/static/js/main.b75e9dfb.chunk.js",
-    "main.js.map": "/blackjack-react/static/js/main.b75e9dfb.chunk.js.map",
+    "main.css": "/blackjack-react/static/css/main.721ebde2.chunk.css",
+    "main.js": "/blackjack-react/static/js/main.6b31c91e.chunk.js",
+    "main.js.map": "/blackjack-react/static/js/main.6b31c91e.chunk.js.map",
     "runtime-main.js": "/blackjack-react/static/js/runtime-main.8df9354f.js",
     "runtime-main.js.map": "/blackjack-react/static/js/runtime-main.8df9354f.js.map",
     "static/css/2.31ff0196.chunk.css": "/blackjack-react/static/css/2.31ff0196.chunk.css",
-    "static/js/2.22c05ed8.chunk.js": "/blackjack-react/static/js/2.22c05ed8.chunk.js",
-    "static/js/2.22c05ed8.chunk.js.map": "/blackjack-react/static/js/2.22c05ed8.chunk.js.map",
+    "static/js/2.2c3950a5.chunk.js": "/blackjack-react/static/js/2.2c3950a5.chunk.js",
+    "static/js/2.2c3950a5.chunk.js.map": "/blackjack-react/static/js/2.2c3950a5.chunk.js.map",
     "index.html": "/blackjack-react/index.html",
     "static/css/2.31ff0196.chunk.css.map": "/blackjack-react/static/css/2.31ff0196.chunk.css.map",
-    "static/css/main.4b871a72.chunk.css.map": "/blackjack-react/static/css/main.4b871a72.chunk.css.map",
-    "static/js/2.22c05ed8.chunk.js.LICENSE.txt": "/blackjack-react/static/js/2.22c05ed8.chunk.js.LICENSE.txt",
-    "static/media/cards.css": "/blackjack-react/static/media/playingCards.e31d3617.png"
+    "static/css/main.721ebde2.chunk.css.map": "/blackjack-react/static/css/main.721ebde2.chunk.css.map",
+    "static/js/2.2c3950a5.chunk.js.LICENSE.txt": "/blackjack-react/static/js/2.2c3950a5.chunk.js.LICENSE.txt",
+    "static/media/Cards.css": "/blackjack-react/static/media/playingCards.e31d3617.png"
   },
   "entrypoints": [
     "static/js/runtime-main.8df9354f.js",
     "static/css/2.31ff0196.chunk.css",
-    "static/js/2.22c05ed8.chunk.js",
-    "static/css/main.4b871a72.chunk.css",
-    "static/js/main.b75e9dfb.chunk.js"
+    "static/js/2.2c3950a5.chunk.js",
+    "static/css/main.721ebde2.chunk.css",
+    "static/js/main.6b31c91e.chunk.js"
   ]
 }
